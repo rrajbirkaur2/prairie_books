@@ -1,0 +1,51 @@
+title,author,description,price,stock_quantity,category
+The Kite Runner,Khaled Hosseini,A powerful story of friendship and redemption set against the backdrop of Afghanistan's tumultuous history.,16.99,25,Fiction
+The Road,Cormac McCarthy,A post-apocalyptic tale of a father and son journeying through a devastated America.,15.99,20,Fiction
+Life of Pi,Yann Martel,A young man survives a disaster at sea and is hurtled into an epic journey of adventure and discovery.,14.99,30,Fiction
+The Handmaid's Tale,Margaret Atwood,Set in a dystopian future where women are subjugated in a theocratic society.,13.99,35,Fiction
+Brave New World,Aldous Huxley,A futuristic society where citizens are conditioned from birth to love their servitude.,12.99,40,Fiction
+The Catcher in the Rye,J.D. Salinger,The story of Holden Caulfield navigating adolescence and alienation in New York City.,11.99,45,Fiction
+Of Mice and Men,John Steinbeck,Two displaced ranch workers during the Great Depression dream of owning their own land.,10.99,50,Fiction
+The Count of Monte Cristo,Alexandre Dumas,A tale of adventure and revenge following a man wrongfully imprisoned.,19.99,15,Fiction
+Anna Karenina,Leo Tolstoy,A complex novel about Russian society and the doomed love affair of Anna Karenina.,18.99,20,Fiction
+Crime and Punishment,Fyodor Dostoevsky,A psychological study of a young man who commits a murder and struggles with guilt.,13.99,25,Fiction
+The Power of Now,Eckhart Tolle,A guide to spiritual enlightenment that emphasizes living in the present moment.,17.99,30,Non-Fiction
+Thinking Fast and Slow,Daniel Kahneman,An exploration of the two systems that drive the way we think.,22.99,25,Non-Fiction
+The Subtle Art of Not Giving a F*ck,Mark Manson,A counterintuitive approach to living a good life by focusing on what truly matters.,18.99,35,Non-Fiction
+Outliers,Malcolm Gladwell,An examination of the factors that contribute to high levels of success.,16.99,30,Non-Fiction
+Freakonomics,Steven D. Levitt,A rogue economist explores the hidden side of everything.,15.99,28,Non-Fiction
+The Tipping Point,Malcolm Gladwell,How little things can make a big difference in social epidemics.,14.99,32,Non-Fiction
+Blink,Malcolm Gladwell,The power of thinking without thinking and how snap judgments are made.,14.99,27,Non-Fiction
+Man's Search for Meaning,Viktor Frankl,A psychiatrist's memoir of surviving Nazi concentration camps and finding purpose.,13.99,40,Non-Fiction
+The 7 Habits of Highly Effective People,Stephen Covey,Powerful lessons in personal change and principles of fairness and integrity.,19.99,22,Non-Fiction
+Guns Germs and Steel,Jared Diamond,A study of the geographical and environmental factors behind the fates of human societies.,21.99,18,Non-Fiction
+The Phantom Tollbooth,Norton Juster,A young boy named Milo passes through a mysterious tollbooth and explores the Lands Beyond.,9.99,55,Children
+Matilda,Roald Dahl,A story about a girl with extraordinary mental powers and her struggle against her awful parents.,8.99,65,Children
+James and the Giant Peach,Roald Dahl,A young orphan boy escapes his terrible aunts by entering a giant magical peach.,8.99,60,Children
+The Lion the Witch and the Wardrobe,C.S. Lewis,Four siblings discover a magical world through a wardrobe and must save it from eternal winter.,10.99,70,Children
+A Wrinkle in Time,Madeleine L'Engle,Meg Murry and her brother travel through space and time to rescue their father.,9.99,58,Children
+Stuart Little,E.B. White,The adventures of a mouse-like small boy named Stuart Little who lives with a human family.,7.99,72,Children
+Holes,Louis Sachar,Stanley Yelnats is sent to a bizarre detention camp where boys dig holes all day.,9.99,48,Children
+Frindle,Andrew Clements,A boy invents a new word and watches it spread throughout his school and beyond.,8.99,52,Children
+The Boxcar Children,Gertrude Chandler Warner,Four orphaned children make their home in an old boxcar and solve mysteries.,8.99,45,Children
+Diary of a Wimpy Kid,Jeff Kinney,Greg Heffley records his middle school experiences in a journal filled with cartoons.,10.99,80,Children
+Physics for Scientists and Engineers,Raymond Serway,A comprehensive textbook covering classical mechanics thermodynamics and modern physics.,149.99,8,Textbooks
+Organic Chemistry,Paula Yurkanis Bruice,A thorough introduction to organic chemistry with an emphasis on understanding reactions.,139.99,6,Textbooks
+Principles of Economics,N. Gregory Mankiw,An introduction to economic principles used in universities worldwide.,129.99,10,Textbooks
+Human Anatomy and Physiology,Elaine Marieb,A clear and engaging description of anatomy and physiology with clinical applications.,134.99,7,Textbooks
+Fundamentals of Database Systems,Ramez Elmasri,A comprehensive introduction to database design and management systems.,119.99,9,Textbooks
+Operating System Concepts,Abraham Silberschatz,Known as the dinosaur book this is the standard textbook for operating systems courses.,124.99,8,Textbooks
+Computer Networks,Andrew Tanenbaum,A comprehensive look at computer networking from the physical layer to applications.,114.99,11,Textbooks
+Discrete Mathematics,Kenneth Rosen,An introduction to discrete mathematics and its applications in computer science.,109.99,12,Textbooks
+Linear Algebra and Its Applications,David Lay,A modern introduction to linear algebra covering vectors matrices and linear transformations.,104.99,14,Textbooks
+Statistics for Business and Economics,Paul Newbold,A practical introduction to statistical methods used in business and economics.,99.99,15,Textbooks
+Saga Volume 1,Brian K. Vaughan,An epic space opera following two soldiers from opposite sides of a galactic war.,16.99,22,Graphic Novels
+Batman The Dark Knight Returns,Frank Miller,An aging Batman comes out of retirement to fight crime in a dystopian Gotham City.,18.99,18,Graphic Novels
+The Walking Dead Volume 1,Robert Kirkman,A sheriff wakes from a coma to find the world overrun by zombies.,17.99,20,Graphic Novels
+Sandman Volume 1,Neil Gaiman,The story of Dream one of the Endless who escapes captivity after decades of imprisonment.,19.99,16,Graphic Novels
+Fun Home,Alison Bechdel,A memoir about growing up with a closeted gay father told through the lens of literature.,15.99,24,Graphic Novels
+Ghost World,Daniel Clowes,Two teenage girls navigate their post-graduation lives in a darkly comic story.,14.99,26,Graphic Novels
+Scott Pilgrim Volume 1,Bryan Lee O'Malley,A slacker musician must defeat his new girlfriend's seven evil exes to win her heart.,13.99,28,Graphic Novels
+Bone Volume 1,Jeff Smith,Three bone cousins are run out of their hometown and end up in a mysterious valley.,14.99,25,Graphic Novels
+Black Hole,Charles Burns,A mysterious plague spreads among Seattle teenagers causing disturbing physical mutations.,17.99,19,Graphic Novels
+From Hell,Alan Moore,A detailed examination of the Jack the Ripper murders set in Victorian London.,21.99,14,Graphic Novels
