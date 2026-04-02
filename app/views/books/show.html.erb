@@ -10,14 +10,34 @@
 
   <div class="row">
     <div class="col-md-4">
-      <% if @book.cover_image.attached? %>
-        <%= image_tag url_for(@book.cover_image), class: "img-fluid rounded shadow" %>
-      <% else %>
-        <div class="card p-5 text-center bg-light">
-          <span style="font-size: 8rem;">📚</span>
-        </div>
-      <% end %>
+  <% if @book.cover_image.attached? %>
+    <%= image_tag url_for(@book.cover_image),
+        class: "img-fluid rounded shadow",
+        style: "max-height: 450px; object-fit: cover;" %>
+  <% elsif @book.cover_url.present? %>
+    <%= image_tag @book.cover_url,
+        class: "img-fluid rounded shadow",
+        style: "max-height: 450px; object-fit: cover;",
+        onerror: "this.style.display='none'; this.nextElementSibling.style.display='flex';" %>
+    <div class="d-none align-items-center justify-content-center rounded"
+         style="height: 350px; background: linear-gradient(135deg, #2c3e50, #3498db);">
+      <div class="text-center text-white p-3">
+        <div style="font-size: 3rem;">📖</div>
+        <h5><%= @book.title %></h5>
+        <p><%= @book.author %></p>
+      </div>
     </div>
+  <% else %>
+    <div class="d-flex align-items-center justify-content-center rounded"
+         style="height: 350px; background: linear-gradient(135deg, #2c3e50, #3498db);">
+      <div class="text-center text-white p-3">
+        <div style="font-size: 3rem;">📖</div>
+        <h5><%= @book.title %></h5>
+        <p><%= @book.author %></p>
+      </div>
+    </div>
+  <% end %>
+</div>
     <div class="col-md-8">
       <% if @book.on_sale? %>
         <span class="badge bg-warning text-dark fs-6 mb-2">🏷️ On Sale!</span>
