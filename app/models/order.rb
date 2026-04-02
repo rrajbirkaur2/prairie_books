@@ -1,3 +1,9 @@
+# Relationships:
+# - belongs_to User (many orders to one user - one-to-many)
+# - belongs_to Province (many orders to one province - one-to-many)
+# - has_many OrderItems (one order to many items - one-to-many)
+# - has_many Books through OrderItems (many-to-many)
+
 class Order < ApplicationRecord
   belongs_to :user, optional: true
   belongs_to :province, optional: true
