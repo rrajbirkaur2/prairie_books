@@ -1,7 +1,7 @@
 <div class="container mt-5">
   <div class="row">
 
-    <!-- Left: Books listing -->
+    <!-- Left: Books grid with pagination -->
     <div class="col-md-9">
       <div class="d-flex justify-content-between align-items-center mb-4">
         <h2 class="mb-0">
@@ -23,11 +23,11 @@
       <% if @books.empty? %>
         <div class="alert alert-info text-center py-5">
           <h4>No books found</h4>
-          <p>Try a different search term or category.</p>
+          <p>Try a different search or category.</p>
           <%= link_to "Browse All Books", books_path, class: "btn btn-dark" %>
         </div>
       <% else %>
-        <div class="row">
+        <div class="row row-cols-1 row-cols-md-3 g-4">
           <% @books.each do |book| %>
             <%= render 'shared/book_card', book: book %>
           <% end %>
@@ -38,11 +38,11 @@
       <% end %>
     </div>
 
-    <!-- Right: Search, Filter, Auth, Cart -->
+    <!-- Right sidebar -->
     <div class="col-md-3">
 
-      <!-- Search & Category Filter (Feature 2.6) -->
-      <div class="card p-3 mb-4 shadow-sm">
+      <!-- Search & Category (Feature 2.6) -->
+      <div class="card p-3 mb-3 shadow-sm">
         <h6 class="fw-bold mb-3">🔍 Search Books</h6>
         <%= form_with url: books_path, method: :get, local: true do |f| %>
           <div class="mb-2">
@@ -66,8 +66,8 @@
         <% end %>
       </div>
 
-      <!-- Filter buttons (Feature 2.4) -->
-      <div class="card p-3 mb-4 shadow-sm">
+      <!-- Filters (Feature 2.4) -->
+      <div class="card p-3 mb-3 shadow-sm">
         <h6 class="fw-bold mb-3">🎯 Filter</h6>
         <div class="d-grid gap-1">
           <%= link_to "📚 All Books", books_path,
@@ -82,7 +82,7 @@
       </div>
 
       <!-- Account -->
-      <div class="card p-3 mb-4 shadow-sm">
+      <div class="card p-3 mb-3 shadow-sm">
         <h6 class="fw-bold mb-3">👤 Account</h6>
         <% if user_signed_in? %>
           <p class="small mb-2">Signed in as <strong><%= current_user.name %></strong></p>
@@ -97,7 +97,7 @@
         <% end %>
       </div>
 
-      <!-- Cart summary -->
+      <!-- Cart -->
       <div class="card p-3 shadow-sm">
         <h6 class="fw-bold mb-3">🛒 Cart</h6>
         <% cart_count = current_cart.total_items %>

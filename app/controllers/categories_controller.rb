@@ -1,4 +1,8 @@
 class CategoriesController < ApplicationController
+  def index
+    @categories = Category.all.includes(:books)
+  end
+
   def show
     @category = Category.find(params[:id])
     @categories = Category.all

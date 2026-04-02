@@ -9,7 +9,7 @@ Rails.application.routes.draw do
   get '/contact', to: 'pages#contact', as: 'contact'
 
   resources :books, only: [:index, :show]
-  resources :categories, only: [:show]
+  resources :categories, only: [:index, :show]
 
   resource :cart, only: [:show]
   resources :cart_items, only: [:create, :update, :destroy]
