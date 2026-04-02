@@ -78,7 +78,7 @@
               <span class="text-warning">$<%= number_with_precision(@cart.total_price, precision: 2) %></span>
             </div>
             <div class="d-grid mt-4">
-              <%= link_to "Proceed to Checkout →", "#", class: "btn btn-warning btn-lg" %>
+              <%= link_to "Proceed to Checkout →", new_checkout_path, class: "btn btn-warning btn-lg" %>
             </div>
           </div>
         </div>

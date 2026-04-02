@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  get "orders/index"
+  get "orders/show"
   devise_for :admin_users, ActiveAdmin::Devise.config
   ActiveAdmin.routes(self)
   devise_for :users
@@ -13,6 +15,13 @@ Rails.application.routes.draw do
 
   resource :cart, only: [:show]
   resources :cart_items, only: [:create, :update, :destroy]
+
+  resources :orders, only: [:index, :show]
+
+  get 'checkout', to: 'checkout#new', as: 'new_checkout'
+  post 'checkout', to: 'checkout#create'
+  get 'checkout/confirm', to: 'checkout#confirm', as: 'confirm_checkout'
+  post 'checkout/complete', to: 'checkout#complete', as: 'complete_checkout'
 
   get "up" => "rails/health#show", as: :rails_health_check
 end

@@ -1,0 +1,80 @@
+<div class="container mt-5">
+  <div class="row justify-content-center">
+    <div class="col-md-6">
+      <div class="card shadow-sm">
+        <div class="card-header bg-dark text-white">
+          <h4 class="mb-0">Edit Profile</h4>
+        </div>
+        <div class="card-body">
+          <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |f| %>
+            <% if resource.errors.any? %>
+              <div class="alert alert-danger">
+                <% resource.errors.full_messages.each do |msg| %>
+                  <p class="mb-0"><%= msg %></p>
+                <% end %>
+              </div>
+            <% end %>
+
+            <div class="mb-3">
+              <%= f.label :name, class: "form-label fw-bold" %>
+              <%= f.text_field :name, class: "form-control" %>
+            </div>
+
+            <div class="mb-3">
+              <%= f.label :email, class: "form-label fw-bold" %>
+              <%= f.email_field :email, class: "form-control" %>
+            </div>
+
+            <hr>
+            <h6 class="fw-bold text-muted">Address Details</h6>
+
+            <div class="mb-3">
+              <%= f.label :address, class: "form-label fw-bold" %>
+              <%= f.text_field :address, class: "form-control" %>
+            </div>
+
+            <div class="mb-3">
+              <%= f.label :city, class: "form-label fw-bold" %>
+              <%= f.text_field :city, class: "form-control" %>
+            </div>
+
+            <div class="mb-3">
+              <%= f.label :province_id, "Province", class: "form-label fw-bold" %>
+              <%= f.select :province_id,
+                  options_from_collection_for_select(Province.all, :id, :name, f.object.province_id),
+                  { include_blank: "Select Province" },
+                  class: "form-select" %>
+            </div>
+
+            <div class="mb-3">
+              <%= f.label :postal_code, class: "form-label fw-bold" %>
+              <%= f.text_field :postal_code, class: "form-control" %>
+            </div>
+
+            <hr>
+            <h6 class="fw-bold text-muted">Change Password (leave blank to keep current)</h6>
+
+            <div class="mb-3">
+              <%= f.label :password, class: "form-label fw-bold" %>
+              <%= f.password_field :password, class: "form-control", autocomplete: "new-password" %>
+            </div>
+
+            <div class="mb-3">
+              <%= f.label :password_confirmation, class: "form-label fw-bold" %>
+              <%= f.password_field :password_confirmation, class: "form-control" %>
+            </div>
+
+            <div class="mb-3">
+              <%= f.label :current_password, class: "form-label fw-bold" %>
+              <%= f.password_field :current_password, class: "form-control" %>
+            </div>
+
+            <div class="d-grid">
+              <%= f.submit "Update Profile", class: "btn btn-dark btn-lg" %>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

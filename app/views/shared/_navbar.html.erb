@@ -36,10 +36,11 @@
         <%# Row 2: Sign In, Sign Up, Cart %>
         <div class="d-flex align-items-center gap-2">
           <% if user_signed_in? %>
-            <span class="text-white-50 small">Hi, <%= current_user.name %></span>
+              <span class="text-white-50 small">Hi, <%= current_user.name %></span>
+            <%= link_to "My Orders", orders_path, class: "btn btn-outline-light btn-sm" %>
             <%= link_to "Sign Out", destroy_user_session_path,
-                data: { turbo_method: :delete },
-                class: "btn btn-outline-light btn-sm" %>
+              data: { turbo_method: :delete },
+              class: "btn btn-outline-light btn-sm" %>
           <% else %>
             <%= link_to "Sign In", new_user_session_path, class: "btn btn-outline-light btn-sm" %>
             <%= link_to "Sign Up", new_user_registration_path, class: "btn btn-warning btn-sm" %>

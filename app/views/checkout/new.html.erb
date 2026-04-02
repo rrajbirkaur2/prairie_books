@@ -1,0 +1,78 @@
+<div class="container mt-5">
+  <div class="row justify-content-center">
+    <div class="col-md-6">
+      <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><%= link_to "Cart", cart_path %></li>
+          <li class="breadcrumb-item active">Checkout</li>
+        </ol>
+      </nav>
+
+      <div class="card shadow-sm">
+        <div class="card-header bg-dark text-white">
+          <h4 class="mb-0">📦 Shipping Details</h4>
+        </div>
+        <div class="card-body">
+          <% if user_signed_in? %>
+            <div class="alert alert-info">
+              <p class="mb-1">Signed in as <strong><%= current_user.email %></strong></p>
+              <% if current_user.province.present? %>
+                <p class="mb-0">Using saved address. <%= link_to "Update address", edit_user_registration_path %></p>
+              <% end %>
+            </div>
+          <% end %>
+
+          <%= form_with url: checkout_path, method: :post, local: true do |f| %>
+            <div class="mb-3">
+              <%= label_tag :address, "Street Address", class: "form-label fw-bold" %>
+              <%= text_field_tag :address,
+                  user_signed_in? ? current_user.address : nil,
+                  class: "form-control",
+                  placeholder: "123 Main Street" %>
+            </div>
+
+            <div class="mb-3">
+              <%= label_tag :city, "City", class: "form-label fw-bold" %>
+              <%= text_field_tag :city,
+                  user_signed_in? ? current_user.city : nil,
+                  class: "form-control",
+                  placeholder: "Winnipeg" %>
+            </div>
+
+            <div class="mb-3">
+              <%= label_tag :province_id, "Province", class: "form-label fw-bold" %>
+              <%= select_tag :province_id,
+                  options_from_collection_for_select(
+                    Province.all, :id, :name,
+                    user_signed_in? ? current_user.province_id : nil
+                  ),
+                  include_blank: "Select your province",
+                  class: "form-select",
+                  required: true %>
+              <small class="text-muted">Tax rates will be calculated based on your province.</small>
+            </div>
+
+            <div class="mb-3">
+              <%= label_tag :postal_code, "Postal Code", class: "form-label fw-bold" %>
+              <%= text_field_tag :postal_code,
+                  user_signed_in? ? current_user.postal_code : nil,
+                  class: "form-control",
+                  placeholder: "R3C 1A1" %>
+            </div>
+
+            <div class="d-grid">
+              <%= submit_tag "Continue to Review Order →", class: "btn btn-dark btn-lg" %>
+            </div>
+          <% end %>
+
+          <% unless user_signed_in? %>
+            <hr>
+            <p class="text-center text-muted small">
+              <%= link_to "Sign in", new_user_session_path %> to use your saved address
+            </p>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

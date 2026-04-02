@@ -1,0 +1,71 @@
+<div class="container mt-5">
+  <div class="row justify-content-center">
+    <div class="col-md-8">
+      <div class="card shadow-sm text-center p-5">
+        <h1>✅</h1>
+        <h2 class="text-success">Order Placed Successfully!</h2>
+        <p class="lead">Thank you for your order, <%= user_signed_in? ? current_user.name : "valued customer" %>!</p>
+        <p class="text-muted">Order #<%= @order.id %></p>
+
+        <div class="card mt-4 text-start">
+          <div class="card-header bg-dark text-white">
+            <h5 class="mb-0">Order Summary</h5>
+          </div>
+          <div class="card-body">
+            <table class="table table-sm">
+              <thead>
+                <tr>
+                  <th>Book</th>
+                  <th>Qty</th>
+                  <th>Price</th>
+                </tr>
+              </thead>
+              <tbody>
+                <% @order.order_items.each do |item| %>
+                  <tr>
+                    <td><%= item.book.title %></td>
+                    <td><%= item.quantity %></td>
+                    <td>$<%= number_with_precision(item.price_at_purchase, precision: 2) %></td>
+                  </tr>
+                <% end %>
+              </tbody>
+            </table>
+            <hr>
+            <div class="d-flex justify-content-between">
+              <span>Subtotal</span>
+              <span>$<%= number_with_precision(@order.subtotal, precision: 2) %></span>
+            </div>
+            <% if @order.gst_amount > 0 %>
+              <div class="d-flex justify-content-between text-muted small">
+                <span>GST</span>
+                <span>$<%= number_with_precision(@order.gst_amount, precision: 2) %></span>
+              </div>
+            <% end %>
+            <% if @order.pst_amount > 0 %>
+              <div class="d-flex justify-content-between text-muted small">
+                <span>PST</span>
+                <span>$<%= number_with_precision(@order.pst_amount, precision: 2) %></span>
+              </div>
+            <% end %>
+            <% if @order.hst_amount > 0 %>
+              <div class="d-flex justify-content-between text-muted small">
+                <span>HST</span>
+                <span>$<%= number_with_precision(@order.hst_amount, precision: 2) %></span>
+              </div>
+            <% end %>
+            <hr>
+            <div class="d-flex justify-content-between fw-bold fs-5">
+              <span>Grand Total</span>
+              <span class="text-warning">$<%= number_with_precision(@order.grand_total, precision: 2) %></span>
+            </div>
+          </div>
+        </div>
+
+        <div class="mt-4 d-flex justify-content-center gap-3">
+          <%= link_to "View My Orders", orders_path, class: "btn btn-dark" %>
+          <%= link_to "Continue Shopping", books_path, class: "btn btn-outline-dark" %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2026_04_02_044518) do
+ActiveRecord::Schema[8.0].define(version: 2026_04_02_053706) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -121,6 +121,20 @@ ActiveRecord::Schema[8.0].define(version: 2026_04_02_044518) do
     t.decimal "total_price"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "user_id"
+    t.integer "province_id"
+    t.decimal "gst_rate"
+    t.decimal "pst_rate"
+    t.decimal "hst_rate"
+    t.decimal "gst_amount"
+    t.decimal "pst_amount"
+    t.decimal "hst_amount"
+    t.decimal "subtotal"
+    t.decimal "grand_total"
+    t.string "stripe_payment_id"
+    t.string "address"
+    t.string "city"
+    t.string "postal_code"
   end
 
   create_table "pages", force: :cascade do |t|

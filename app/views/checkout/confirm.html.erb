@@ -1,0 +1,113 @@
+<div class="container mt-5">
+  <div class="row justify-content-center">
+    <div class="col-md-8">
+      <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><%= link_to "Cart", cart_path %></li>
+          <li class="breadcrumb-item"><%= link_to "Checkout", new_checkout_path %></li>
+          <li class="breadcrumb-item active">Review Order</li>
+        </ol>
+      </nav>
+
+      <h3 class="mb-4">📋 Review Your Order</h3>
+
+      <div class="row">
+        <div class="col-md-8">
+          <%# Order items %>
+          <div class="card shadow-sm mb-4">
+            <div class="card-header bg-dark text-white">
+              <h5 class="mb-0">Order Items</h5>
+            </div>
+            <div class="card-body p-0">
+              <table class="table table-hover mb-0">
+                <thead class="table-light">
+                  <tr>
+                    <th>Book</th>
+                    <th>Price</th>
+                    <th>Qty</th>
+                    <th>Subtotal</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <% @cart_items.each do |item| %>
+                    <tr>
+                      <td>
+                        <strong><%= item.book.title %></strong><br>
+                        <small class="text-muted"><%= item.book.author %></small>
+                      </td>
+                      <td>$<%= number_with_precision(item.price_at_purchase, precision: 2) %></td>
+                      <td><%= item.quantity %></td>
+                      <td>$<%= number_with_precision(item.subtotal, precision: 2) %></td>
+                    </tr>
+                  <% end %>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <%# Shipping address %>
+          <div class="card shadow-sm mb-4">
+            <div class="card-header bg-dark text-white">
+              <h5 class="mb-0">Shipping Address</h5>
+            </div>
+            <div class="card-body">
+              <p class="mb-1"><%= @address %></p>
+              <p class="mb-1"><%= @city %></p>
+              <p class="mb-1"><%= @province.name %></p>
+              <p class="mb-0"><%= @postal_code %></p>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-4">
+          <%# Order summary with taxes %>
+          <div class="card shadow-sm mb-4">
+            <div class="card-header bg-dark text-white">
+              <h5 class="mb-0">Order Summary</h5>
+            </div>
+            <div class="card-body">
+              <div class="d-flex justify-content-between mb-2">
+                <span>Subtotal</span>
+                <span>$<%= number_with_precision(@subtotal, precision: 2) %></span>
+              </div>
+
+              <% if @gst > 0 %>
+                <div class="d-flex justify-content-between mb-2 text-muted small">
+                  <span>GST (<%= number_with_precision(@province.gst * 100, precision: 1) %>%)</span>
+                  <span>$<%= number_with_precision(@gst, precision: 2) %></span>
+                </div>
+              <% end %>
+
+              <% if @pst > 0 %>
+                <div class="d-flex justify-content-between mb-2 text-muted small">
+                  <span>PST (<%= number_with_precision(@province.pst * 100, precision: 1) %>%)</span>
+                  <span>$<%= number_with_precision(@pst, precision: 2) %></span>
+                </div>
+              <% end %>
+
+              <% if @hst > 0 %>
+                <div class="d-flex justify-content-between mb-2 text-muted small">
+                  <span>HST (<%= number_with_precision(@province.hst * 100, precision: 1) %>%)</span>
+                  <span>$<%= number_with_precision(@hst, precision: 2) %></span>
+                </div>
+              <% end %>
+
+              <hr>
+              <div class="d-flex justify-content-between fw-bold fs-5">
+                <span>Total</span>
+                <span class="text-warning">$<%= number_with_precision(@grand_total, precision: 2) %></span>
+              </div>
+            </div>
+          </div>
+
+          <%= form_with url: complete_checkout_path, method: :post, local: true do |f| %>
+            <div class="d-grid gap-2">
+              <%= f.submit "Place Order ✓", class: "btn btn-warning btn-lg" %>
+              <%= link_to "← Back to Cart", cart_path, class: "btn btn-outline-dark" %>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
