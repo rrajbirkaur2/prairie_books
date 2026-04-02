@@ -27,15 +27,30 @@
                 <% @cart.cart_items.each do |item| %>
                   <tr>
                     <td>
-                      <div class="d-flex align-items-center">
-                        <span class="me-2" style="font-size: 1.5rem;">📚</span>
-                        <div>
-                          <%= link_to item.book.title, book_path(item.book), class: "text-decoration-none fw-bold" %>
-                          <br>
-                          <small class="text-muted"><%= item.book.author %></small>
-                        </div>
-                      </div>
-                    </td>
+  <div class="d-flex align-items-center">
+    <% if item.book.cover_image.attached? %>
+      <%= image_tag url_for(item.book.cover_image),
+          style: "height: 60px; width: 45px; object-fit: cover; border-radius: 4px;",
+          class: "me-3" %>
+    <% elsif item.book.cover_url.present? %>
+      <%= image_tag item.book.cover_url,
+          style: "height: 60px; width: 45px; object-fit: cover; border-radius: 4px;",
+          class: "me-3",
+          onerror: "this.style.display='none'" %>
+    <% else %>
+      <div class="me-3 d-flex align-items-center justify-content-center"
+           style="height: 60px; width: 45px; background: linear-gradient(135deg, #2c3e50, #3498db); border-radius: 4px;">
+        <span style="font-size: 1.2rem;">📖</span>
+      </div>
+    <% end %>
+    <div>
+      <%= link_to item.book.title, book_path(item.book),
+          class: "text-decoration-none fw-bold" %>
+      <br>
+      <small class="text-muted"><%= item.book.author %></small>
+    </div>
+  </div>
+</td>
                     <td>$<%= number_with_precision(item.price_at_purchase, precision: 2) %></td>
                     <td style="width: 180px;">
                       <%= form_with url: cart_item_path(item), method: :patch, local: true do |f| %>
