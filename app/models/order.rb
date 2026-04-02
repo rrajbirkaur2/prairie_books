@@ -6,22 +6,23 @@ class Order < ApplicationRecord
 
   STATUSES = %w[pending paid shipped].freeze
 
-  validates :status, presence: true,
-            inclusion: { in: STATUSES }
-
-  scope :pending, -> { where(status: "pending") }
-  scope :paid, -> { where(status: "paid") }
-  scope :shipped, -> { where(status: "shipped") }
+  validates :status, presence: true, inclusion: { in: STATUSES }
+  validates :total_price, numericality: { greater_than_or_equal_to: 0 }, allow_nil: true
+  validates :subtotal, numericality: { greater_than_or_equal_to: 0 }, allow_nil: true
+  validates :grand_total, numericality: { greater_than_or_equal_to: 0 }, allow_nil: true
+  validates :gst_rate, numericality: { greater_than_or_equal_to: 0 }, allow_nil: true
+  validates :pst_rate, numericality: { greater_than_or_equal_to: 0 }, allow_nil: true
+  validates :hst_rate, numericality: { greater_than_or_equal_to: 0 }, allow_nil: true
 
   def self.ransackable_attributes(auth_object = nil)
-    [ "address", "city", "created_at", "grand_total", "gst_amount",
+    ["address", "city", "created_at", "grand_total", "gst_amount",
      "gst_rate", "hst_amount", "hst_rate", "id", "postal_code",
      "province_id", "pst_amount", "pst_rate", "status",
      "stripe_payment_id", "subtotal", "total_price",
-     "updated_at", "user_id" ]
+     "updated_at", "user_id"]
   end
 
   def self.ransackable_associations(auth_object = nil)
-    [ "user", "order_items", "books", "province" ]
+    ["user", "order_items", "books", "province"]
   end
 end
