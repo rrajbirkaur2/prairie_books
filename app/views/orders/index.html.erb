@@ -1,5 +1,8 @@
 <div class="container mt-5">
-  <h2>📦 My Orders</h2>
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <h2>📦 My Orders</h2>
+    <%= link_to "Continue Shopping", books_path, class: "btn btn-outline-dark" %>
+  </div>
   <hr>
 
   <% if @orders.empty? %>
@@ -13,15 +16,16 @@
         <div class="card-header d-flex justify-content-between align-items-center">
           <span class="fw-bold">Order #<%= order.id %></span>
           <span class="badge <%= order.status == 'paid' ? 'bg-success' : order.status == 'shipped' ? 'bg-info' : 'bg-warning text-dark' %>">
-            <%= order.status.capitalize %>
+            <%= order.status&.capitalize %>
           </span>
           <span class="text-muted small"><%= order.created_at.strftime("%B %d, %Y") %></span>
         </div>
         <div class="card-body">
-          <table class="table table-sm">
-            <thead>
+          <table class="table table-sm mb-3">
+            <thead class="table-light">
               <tr>
                 <th>Book</th>
+                <th>Author</th>
                 <th>Qty</th>
                 <th>Price</th>
                 <th>Subtotal</th>
@@ -31,6 +35,7 @@
               <% order.order_items.each do |item| %>
                 <tr>
                   <td><%= item.book.title %></td>
+                  <td><%= item.book.author %></td>
                   <td><%= item.quantity %></td>
                   <td>$<%= number_with_precision(item.price_at_purchase, precision: 2) %></td>
                   <td>$<%= number_with_precision(item.subtotal, precision: 2) %></td>
@@ -38,24 +43,45 @@
               <% end %>
             </tbody>
           </table>
-          <hr>
+
           <div class="row">
             <div class="col-md-6">
               <small class="text-muted">
-                <strong>Ship to:</strong> <%= order.address %>, <%= order.city %>, <%= order.province&.name %> <%= order.postal_code %>
+                <strong>Ship to:</strong><br>
+                <%= order.address %><br>
+                <%= order.city %>, <%= order.province&.name %><br>
+                <%= order.postal_code %>
               </small>
             </div>
-            <div class="col-md-6 text-end">
-              <% if order.gst_amount.to_f > 0 %>
-                <small class="text-muted d-block">GST: $<%= number_with_precision(order.gst_amount, precision: 2) %></small>
-              <% end %>
-              <% if order.pst_amount.to_f > 0 %>
-                <small class="text-muted d-block">PST: $<%= number_with_precision(order.pst_amount, precision: 2) %></small>
-              <% end %>
-              <% if order.hst_amount.to_f > 0 %>
-                <small class="text-muted d-block">HST: $<%= number_with_precision(order.hst_amount, precision: 2) %></small>
-              <% end %>
-              <strong class="text-warning fs-5">Total: $<%= number_with_precision(order.grand_total, precision: 2) %></strong>
+            <div class="col-md-6">
+              <table class="table table-sm table-borderless text-end mb-0">
+                <tr>
+                  <td class="text-muted">Subtotal:</td>
+                  <td>$<%= number_with_precision(order.subtotal, precision: 2) %></td>
+                </tr>
+                <% if order.gst_amount.to_f > 0 %>
+                  <tr>
+                    <td class="text-muted">GST (<%= number_with_precision(order.gst_rate.to_f * 100, precision: 1) %>%):</td>
+                    <td>$<%= number_with_precision(order.gst_amount, precision: 2) %></td>
+                  </tr>
+                <% end %>
+                <% if order.pst_amount.to_f > 0 %>
+                  <tr>
+                    <td class="text-muted">PST (<%= number_with_precision(order.pst_rate.to_f * 100, precision: 1) %>%):</td>
+                    <td>$<%= number_with_precision(order.pst_amount, precision: 2) %></td>
+                  </tr>
+                <% end %>
+                <% if order.hst_amount.to_f > 0 %>
+                  <tr>
+                    <td class="text-muted">HST (<%= number_with_precision(order.hst_rate.to_f * 100, precision: 1) %>%):</td>
+                    <td>$<%= number_with_precision(order.hst_amount, precision: 2) %></td>
+                  </tr>
+                <% end %>
+                <tr class="fw-bold">
+                  <td>Grand Total:</td>
+                  <td class="text-warning fs-5">$<%= number_with_precision(order.grand_total, precision: 2) %></td>
+                </tr>
+              </table>
             </div>
           </div>
         </div>

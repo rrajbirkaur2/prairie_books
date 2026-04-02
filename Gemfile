@@ -27,6 +27,7 @@ gem 'image_processing', '~> 1.2'
 gem 'kaminari'
 gem 'bootstrap', '~> 5.3'
 gem 'jquery-rails'
+gem 'stripe'
 
 # Use Active Model has_secure_password [https://guides.rubyonrails.org/active_model_basics.html#securepassword]
 # gem "bcrypt", "~> 3.1.7"
