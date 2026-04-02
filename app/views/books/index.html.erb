@@ -1,0 +1,118 @@
+<div class="container mt-5">
+  <div class="row">
+
+    <!-- Left: Books listing -->
+    <div class="col-md-9">
+      <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2 class="mb-0">
+          <% if params[:filter] == "on_sale" %>
+            🏷️ On Sale
+          <% elsif params[:filter] == "new" %>
+            🆕 New Arrivals
+          <% elsif params[:filter] == "recently_updated" %>
+            🔄 Recently Updated
+          <% elsif params[:search].present? %>
+            Results for "<%= params[:search] %>"
+          <% else %>
+            All Books
+          <% end %>
+        </h2>
+        <span class="badge bg-secondary fs-6"><%= @books.total_count %> books</span>
+      </div>
+
+      <% if @books.empty? %>
+        <div class="alert alert-info text-center py-5">
+          <h4>No books found</h4>
+          <p>Try a different search term or category.</p>
+          <%= link_to "Browse All Books", books_path, class: "btn btn-dark" %>
+        </div>
+      <% else %>
+        <div class="row">
+          <% @books.each do |book| %>
+            <%= render 'shared/book_card', book: book %>
+          <% end %>
+        </div>
+        <div class="d-flex justify-content-center mt-5">
+          <%= paginate @books %>
+        </div>
+      <% end %>
+    </div>
+
+    <!-- Right: Search, Filter, Auth, Cart -->
+    <div class="col-md-3">
+
+      <!-- Search & Category Filter (Feature 2.6) -->
+      <div class="card p-3 mb-4 shadow-sm">
+        <h6 class="fw-bold mb-3">🔍 Search Books</h6>
+        <%= form_with url: books_path, method: :get, local: true do |f| %>
+          <div class="mb-2">
+            <%= f.text_field :search,
+                value: params[:search],
+                class: "form-control form-control-sm",
+                placeholder: "Search title or description..." %>
+          </div>
+          <div class="mb-2">
+            <%= f.select :category_id,
+                options_from_collection_for_select(
+                  @categories, :id, :name, params[:category_id]
+                ),
+                { include_blank: "All Categories" },
+                class: "form-select form-select-sm" %>
+          </div>
+          <div class="d-grid gap-1">
+            <%= f.submit "Search", class: "btn btn-dark btn-sm" %>
+            <%= link_to "Clear", books_path, class: "btn btn-outline-secondary btn-sm" %>
+          </div>
+        <% end %>
+      </div>
+
+      <!-- Filter buttons (Feature 2.4) -->
+      <div class="card p-3 mb-4 shadow-sm">
+        <h6 class="fw-bold mb-3">🎯 Filter</h6>
+        <div class="d-grid gap-1">
+          <%= link_to "📚 All Books", books_path,
+              class: "btn btn-sm #{params[:filter].blank? && params[:search].blank? ? 'btn-dark' : 'btn-outline-dark'}" %>
+          <%= link_to "🏷️ On Sale", books_path(filter: "on_sale"),
+              class: "btn btn-sm #{params[:filter] == 'on_sale' ? 'btn-warning' : 'btn-outline-warning'}" %>
+          <%= link_to "🆕 New Arrivals", books_path(filter: "new"),
+              class: "btn btn-sm #{params[:filter] == 'new' ? 'btn-success' : 'btn-outline-success'}" %>
+          <%= link_to "🔄 Recently Updated", books_path(filter: "recently_updated"),
+              class: "btn btn-sm #{params[:filter] == 'recently_updated' ? 'btn-info' : 'btn-outline-info'}" %>
+        </div>
+      </div>
+
+      <!-- Account -->
+      <div class="card p-3 mb-4 shadow-sm">
+        <h6 class="fw-bold mb-3">👤 Account</h6>
+        <% if user_signed_in? %>
+          <p class="small mb-2">Signed in as <strong><%= current_user.name %></strong></p>
+          <%= link_to "Sign Out", destroy_user_session_path,
+              data: { turbo_method: :delete },
+              class: "btn btn-outline-danger btn-sm w-100" %>
+        <% else %>
+          <div class="d-grid gap-1">
+            <%= link_to "Sign In", new_user_session_path, class: "btn btn-dark btn-sm" %>
+            <%= link_to "Sign Up", new_user_registration_path, class: "btn btn-warning btn-sm" %>
+          </div>
+        <% end %>
+      </div>
+
+      <!-- Cart summary -->
+      <div class="card p-3 shadow-sm">
+        <h6 class="fw-bold mb-3">🛒 Cart</h6>
+        <% cart_count = current_cart.total_items %>
+        <% if cart_count > 0 %>
+          <p class="small mb-1"><%= cart_count %> item(s) in cart</p>
+          <p class="small fw-bold text-warning mb-2">
+            $<%= number_with_precision(current_cart.total_price, precision: 2) %>
+          </p>
+          <%= link_to "View Cart", cart_path, class: "btn btn-warning btn-sm w-100" %>
+        <% else %>
+          <p class="small text-muted mb-2">Your cart is empty</p>
+          <%= link_to "View Cart", cart_path, class: "btn btn-outline-dark btn-sm w-100" %>
+        <% end %>
+      </div>
+
+    </div>
+  </div>
+</div>

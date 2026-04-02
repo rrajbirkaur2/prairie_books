@@ -1,0 +1,46 @@
+<div class="container mt-5">
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><%= link_to "Home", root_path %></li>
+      <li class="breadcrumb-item"><%= link_to "Books", books_path %></li>
+      <li class="breadcrumb-item"><%= link_to @book.category.name, category_path(@book.category) %></li>
+      <li class="breadcrumb-item active"><%= @book.title %></li>
+    </ol>
+  </nav>
+
+  <div class="row">
+    <div class="col-md-4">
+      <% if @book.cover_image.attached? %>
+        <%= image_tag url_for(@book.cover_image), class: "img-fluid rounded shadow" %>
+      <% else %>
+        <div class="card p-5 text-center bg-light">
+          <span style="font-size: 8rem;">📚</span>
+        </div>
+      <% end %>
+    </div>
+    <div class="col-md-8">
+      <% if @book.on_sale? %>
+        <span class="badge bg-warning text-dark fs-6 mb-2">🏷️ On Sale!</span>
+      <% end %>
+      <h1><%= @book.title %></h1>
+      <p class="text-muted fs-5">by <%= @book.author %></p>
+      <span class="badge bg-secondary mb-3"><%= @book.category.name %></span>
+      <p class="fs-2 fw-bold text-warning">$<%= number_with_precision(@book.price, precision: 2) %></p>
+      <p><%= @book.description %></p>
+      <p>
+        <% if @book.stock_quantity > 0 %>
+          <span class="text-success fw-bold">✓ In Stock (<%= @book.stock_quantity %> available)</span>
+        <% else %>
+          <span class="text-danger fw-bold">✗ Out of Stock</span>
+        <% end %>
+      </p>
+      <% if @book.stock_quantity > 0 %>
+        <%= button_to "Add to Cart 🛒", cart_items_path(book_id: @book.id),
+            method: :post,
+            class: "btn btn-warning btn-lg" %>
+      <% else %>
+        <button class="btn btn-secondary btn-lg" disabled>Out of Stock</button>
+      <% end %>
+    </div>
+  </div>
+</div>

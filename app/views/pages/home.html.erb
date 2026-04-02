@@ -1,0 +1,68 @@
+<div class="hero-section">
+  <div class="container text-center">
+    <h1>Welcome to Prairie Books</h1>
+    <p class="lead">Winnipeg's favourite independent bookstore — now online.</p>
+    <%= link_to "Browse All Books", books_path, class: "btn btn-warning btn-lg mt-3 me-2" %>
+  </div>
+</div>
+
+<div class="container mt-5">
+  <div class="row text-center g-3">
+    <div class="col-md-4">
+      <%= link_to books_path(filter: "on_sale"), class: "text-decoration-none" do %>
+        <div class="card p-4 h-100 border-warning shadow-sm">
+          <span style="font-size: 2.5rem;">🏷️</span>
+          <h5 class="mt-2 text-warning fw-bold">On Sale</h5>
+          <p class="text-muted small mb-0">Great deals on selected books</p>
+        </div>
+      <% end %>
+    </div>
+    <div class="col-md-4">
+      <%= link_to books_path(filter: "new"), class: "text-decoration-none" do %>
+        <div class="card p-4 h-100 border-success shadow-sm">
+          <span style="font-size: 2.5rem;">🆕</span>
+          <h5 class="mt-2 text-success fw-bold">New Arrivals</h5>
+          <p class="text-muted small mb-0">Books added in the last 3 days</p>
+        </div>
+      <% end %>
+    </div>
+    <div class="col-md-4">
+      <%= link_to books_path(filter: "recently_updated"), class: "text-decoration-none" do %>
+        <div class="card p-4 h-100 border-info shadow-sm">
+          <span style="font-size: 2.5rem;">🔄</span>
+          <h5 class="mt-2 text-info fw-bold">Recently Updated</h5>
+          <p class="text-muted small mb-0">Freshly updated listings</p>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>
+
+<div class="container mt-5">
+  <h2 class="mb-4">Browse by Category</h2>
+  <div class="row g-3">
+    <% @categories.each do |category| %>
+      <div class="col-md-4 col-lg-2">
+        <%= link_to category_path(category), class: "text-decoration-none" do %>
+          <div class="card text-center p-3 h-100 shadow-sm">
+            <span style="font-size: 2rem;">📖</span>
+            <p class="mt-2 mb-1 fw-bold text-dark small"><%= category.name %></p>
+            <p class="text-muted small mb-0"><%= category.books.count %> books</p>
+          </div>
+        <% end %>
+      </div>
+    <% end %>
+  </div>
+</div>
+
+<div class="container mt-5">
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <h2>Featured Books</h2>
+    <%= link_to "View All →", books_path, class: "btn btn-outline-dark" %>
+  </div>
+  <div class="row">
+    <% @featured_books.each do |book| %>
+      <%= render 'shared/book_card', book: book %>
+    <% end %>
+  </div>
+</div>
