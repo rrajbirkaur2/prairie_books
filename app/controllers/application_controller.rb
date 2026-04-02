@@ -1,17 +1,23 @@
 class ApplicationController < ActionController::Base
-  helper_method :current_cart
+  helper_method :current_cart, :breadcrumbs, :add_breadcrumb
   before_action :configure_permitted_parameters, if: :devise_controller?
 
   def current_cart
     session[:cart_id] ||= nil
     @current_cart ||= Cart.find_by(id: session[:cart_id])
-
     if @current_cart.nil?
       @current_cart = Cart.create!(session_id: session.id.to_s)
       session[:cart_id] = @current_cart.id
     end
-
     @current_cart
+  end
+
+  def breadcrumbs
+    @breadcrumbs ||= [{ name: "Home", path: root_path }]
+  end
+
+  def add_breadcrumb(name, path = "#")
+    breadcrumbs << { name: name, path: path }
   end
 
   protected

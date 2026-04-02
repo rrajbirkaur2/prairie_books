@@ -9,11 +9,14 @@ class Book < ApplicationRecord
   validates :stock_quantity, presence: true, numericality: { greater_than_or_equal_to: 0 }
 
   scope :on_sale, -> { where(on_sale: true) }
-  scope :new_arrivals, -> { where(created_at: 3.days.ago..Time.now) }
   scope :recently_updated, -> {
-    where(updated_at: 3.days.ago..Time.now)
-    .where.not(created_at: 3.days.ago..Time.now)
-  }
+  where(updated_at: 3.days.ago..Time.now)
+  .where("created_at < ?", 3.days.ago)
+}
+
+scope :new_arrivals, -> {
+  where(created_at: 3.days.ago..Time.now)
+}
 
   def self.ransackable_attributes(auth_object = nil)
     ["author", "category_id", "created_at", "description", "id",

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2026_04_02_053731) do
+ActiveRecord::Schema[8.0].define(version: 2026_04_02_155437) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -78,6 +78,7 @@ ActiveRecord::Schema[8.0].define(version: 2026_04_02_053731) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.boolean "on_sale", default: false
+    t.string "cover_url"
     t.index ["category_id"], name: "index_books_on_category_id"
   end
 
@@ -135,6 +136,7 @@ ActiveRecord::Schema[8.0].define(version: 2026_04_02_053731) do
     t.string "address"
     t.string "city"
     t.string "postal_code"
+    t.string "stripe_customer_id"
   end
 
   create_table "pages", force: :cascade do |t|
