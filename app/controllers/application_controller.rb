@@ -1,6 +1,7 @@
 class ApplicationController < ActionController::Base
   helper_method :current_cart, :breadcrumbs, :add_breadcrumb
   before_action :configure_permitted_parameters, if: :devise_controller?
+  before_action :track_visit_count
 
   def current_cart
     session[:cart_id] ||= nil
@@ -13,11 +14,19 @@ class ApplicationController < ActionController::Base
   end
 
   def breadcrumbs
-    @breadcrumbs ||= [ { name: "Home", path: root_path } ]
+    @breadcrumbs ||= [{ name: "Home", path: root_path }]
   end
 
   def add_breadcrumb(name, path = "#")
     breadcrumbs << { name: name, path: path }
+  end
+
+  private
+
+  def track_visit_count
+    session[:visit_count] ||= 0
+    session[:visit_count] += 1
+    session[:last_visited] = Time.now.to_s
   end
 
   protected
