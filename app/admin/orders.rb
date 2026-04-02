@@ -1,5 +1,5 @@
 ActiveAdmin.register Order do
-  permit_params :status, :user_id
+  permit_params :status
 
   actions :all, except: [:new, :destroy]
 
@@ -7,28 +7,32 @@ ActiveAdmin.register Order do
     selectable_column
     id_column
     column :user do |order|
-      if order.user
-        link_to order.user.name, admin_user_path(order.user)
-      else
-        "Guest"
-      end
-    end
-    column "Customer Email" do |order|
-      order.user&.email
+      order.user ? "#{order.user.name} (#{order.user.email})" : "Guest"
     end
     column :status do |order|
-      status_tag order.status
+      case order.status
+      when "paid"
+        status_tag "paid", class: "green"
+      when "shipped"
+        status_tag "shipped", class: "blue"
+      when "pending"
+        status_tag "pending", class: "orange"
+      else
+        status_tag order.status
+      end
     end
     column "Items" do |order|
       order.order_items.map { |item|
         "#{item.book.title} (x#{item.quantity})"
-      }.join(", ").truncate(50)
+      }.join(", ").truncate(60)
     end
     column "Subtotal" do |order|
       "$#{number_with_precision(order.subtotal, precision: 2)}"
     end
     column "Taxes" do |order|
-      total_tax = order.gst_amount.to_f + order.pst_amount.to_f + order.hst_amount.to_f
+      total_tax = order.gst_amount.to_f +
+                  order.pst_amount.to_f +
+                  order.hst_amount.to_f
       "$#{number_with_precision(total_tax, precision: 2)}"
     end
     column "Grand Total" do |order|
@@ -38,14 +42,31 @@ ActiveAdmin.register Order do
     actions
   end
 
-  filter :status
+  filter :status, as: :select,
+         collection: ["pending", "paid", "shipped"]
   filter :user
   filter :created_at
+
+  # Batch actions for changing status
+  batch_action :mark_as_paid do |ids|
+    Order.where(id: ids).update_all(status: "paid")
+    redirect_to collection_path, notice: "Orders marked as paid!"
+  end
+
+  batch_action :mark_as_shipped do |ids|
+    Order.where(id: ids).update_all(status: "shipped")
+    redirect_to collection_path, notice: "Orders marked as shipped!"
+  end
 
   form do |f|
     f.inputs "Update Order Status" do
       f.input :status, as: :select,
-              collection: ["pending", "paid", "shipped"]
+              collection: [
+                ["Pending", "pending"],
+                ["Paid", "paid"],
+                ["Shipped", "shipped"]
+              ],
+              include_blank: false
     end
     f.actions
   end
@@ -54,30 +75,38 @@ ActiveAdmin.register Order do
     attributes_table do
       row :id
       row :user do |order|
-        if order.user
-          link_to order.user.name, admin_user_path(order.user)
-        end
-      end
-      row "Customer Email" do |order|
-        order.user&.email
+        order.user ? "#{order.user.name} (#{order.user.email})" : "Guest"
       end
       row :status do |order|
-        status_tag order.status
+        case order.status
+        when "paid"
+          status_tag "paid", class: "green"
+        when "shipped"
+          status_tag "shipped", class: "blue"
+        when "pending"
+          status_tag "pending", class: "orange"
+        else
+          status_tag order.status
+        end
       end
       row "Shipping Address" do |order|
-        "#{order.address}, #{order.city}, #{order.province&.name} #{order.postal_code}"
+        "#{order.address}, #{order.city}, " \
+        "#{order.province&.name} #{order.postal_code}"
       end
       row "Subtotal" do |order|
         "$#{number_with_precision(order.subtotal, precision: 2)}"
       end
       row "GST" do |order|
-        "$#{number_with_precision(order.gst_amount, precision: 2)} (#{number_with_precision(order.gst_rate.to_f * 100, precision: 1)}%)"
+        "$#{number_with_precision(order.gst_amount, precision: 2)} " \
+        "(#{number_with_precision(order.gst_rate.to_f * 100, precision: 1)}%)"
       end
       row "PST" do |order|
-        "$#{number_with_precision(order.pst_amount, precision: 2)} (#{number_with_precision(order.pst_rate.to_f * 100, precision: 1)}%)"
+        "$#{number_with_precision(order.pst_amount, precision: 2)} " \
+        "(#{number_with_precision(order.pst_rate.to_f * 100, precision: 1)}%)"
       end
       row "HST" do |order|
-        "$#{number_with_precision(order.hst_amount, precision: 2)} (#{number_with_precision(order.hst_rate.to_f * 100, precision: 1)}%)"
+        "$#{number_with_precision(order.hst_amount, precision: 2)} " \
+        "(#{number_with_precision(order.hst_rate.to_f * 100, precision: 1)}%)"
       end
       row "Grand Total" do |order|
         "$#{number_with_precision(order.grand_total, precision: 2)}"
@@ -103,5 +132,27 @@ ActiveAdmin.register Order do
         end
       end
     end
+
+    # Manual ship button
+    panel "Actions" do
+      if order.status == "paid"
+        link_to "Mark as Shipped",
+                mark_shipped_admin_order_path(order),
+                method: :put,
+                class: "btn btn-info",
+                data: { confirm: "Mark this order as shipped?" }
+      elsif order.status == "pending"
+        para "Waiting for payment confirmation."
+      else
+        para "Order has been shipped."
+      end
+    end
+  end
+
+  # Custom action to mark as shipped
+  member_action :mark_shipped, method: :put do
+    resource.update!(status: "shipped")
+    redirect_to admin_order_path(resource),
+                notice: "Order marked as shipped!"
   end
 end
