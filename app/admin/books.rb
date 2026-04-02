@@ -28,7 +28,7 @@ ActiveAdmin.register Book do
   filter :author
   filter :category
   filter :price
-  filter :on_sale, as: :select, collection: [["Yes", true], ["No", false]]
+  filter :on_sale, as: :select, collection: [ [ "Yes", true ], [ "No", false ] ]
   filter :created_at, label: "New Arrivals (Created At)"
   filter :updated_at, label: "Recently Updated (Updated At)"
 

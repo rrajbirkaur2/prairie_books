@@ -1,9 +1,9 @@
 namespace :import do
   desc "Import books from CSV file"
   task csv_books: :environment do
-    require 'csv'
+    require "csv"
 
-    csv_path = Rails.root.join('lib', 'data', 'books.csv')
+    csv_path = Rails.root.join("lib", "data", "books.csv")
 
     unless File.exist?(csv_path)
       puts "CSV file not found at #{csv_path}"
@@ -14,7 +14,7 @@ namespace :import do
     skipped = 0
 
     CSV.foreach(csv_path, headers: true) do |row|
-      category = Category.find_by(name: row['category'])
+      category = Category.find_by(name: row["category"])
 
       unless category
         puts "Category not found: #{row['category']}, skipping..."
@@ -22,14 +22,14 @@ namespace :import do
         next
       end
 
-      next if Book.exists?(title: row['title'])
+      next if Book.exists?(title: row["title"])
 
       Book.create!(
-        title: row['title'],
-        author: row['author'],
-        description: row['description'],
-        price: row['price'].to_f,
-        stock_quantity: row['stock_quantity'].to_i,
+        title: row["title"],
+        author: row["author"],
+        description: row["description"],
+        price: row["price"].to_f,
+        stock_quantity: row["stock_quantity"].to_i,
         category: category
       )
       imported += 1

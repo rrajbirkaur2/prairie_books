@@ -1,7 +1,7 @@
 ActiveAdmin.register Order do
   permit_params :status
 
-  actions :all, except: [:new, :destroy]
+  actions :all, except: [ :new, :destroy ]
 
   index do
     selectable_column
@@ -43,7 +43,7 @@ ActiveAdmin.register Order do
   end
 
   filter :status, as: :select,
-         collection: ["pending", "paid", "shipped"]
+         collection: [ "pending", "paid", "shipped" ]
   filter :user
   filter :created_at
 
@@ -62,9 +62,9 @@ ActiveAdmin.register Order do
     f.inputs "Update Order Status" do
       f.input :status, as: :select,
               collection: [
-                ["Pending", "pending"],
-                ["Paid", "paid"],
-                ["Shipped", "shipped"]
+                [ "Pending", "pending" ],
+                [ "Paid", "paid" ],
+                [ "Shipped", "shipped" ]
               ],
               include_blank: false
     end

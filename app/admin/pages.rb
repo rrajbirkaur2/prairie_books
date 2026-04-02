@@ -1,7 +1,7 @@
 ActiveAdmin.register Page do
   permit_params :title, :content, :slug
 
-  actions :all, except: [:new, :destroy]
+  actions :all, except: [ :new, :destroy ]
 
   index do
     id_column

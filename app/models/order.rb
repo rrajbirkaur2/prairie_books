@@ -14,14 +14,14 @@ class Order < ApplicationRecord
   scope :shipped, -> { where(status: "shipped") }
 
   def self.ransackable_attributes(auth_object = nil)
-    ["address", "city", "created_at", "grand_total", "gst_amount",
+    [ "address", "city", "created_at", "grand_total", "gst_amount",
      "gst_rate", "hst_amount", "hst_rate", "id", "postal_code",
      "province_id", "pst_amount", "pst_rate", "status",
      "stripe_payment_id", "subtotal", "total_price",
-     "updated_at", "user_id"]
+     "updated_at", "user_id" ]
   end
 
   def self.ransackable_associations(auth_object = nil)
-    ["user", "order_items", "books", "province"]
+    [ "user", "order_items", "books", "province" ]
   end
 end

@@ -96,7 +96,7 @@ puts "Seeded #{Book.count} real books"
 # Seed 100 additional books using Faker
 require 'faker'
 
-[fiction, nonfiction, children, textbooks, graphic].each do |category|
+[ fiction, nonfiction, children, textbooks, graphic ].each do |category|
   20.times do
     title = Faker::Book.title + " " + rand(1000).to_s
     Book.find_or_create_by(title: title).update(

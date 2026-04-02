@@ -13,7 +13,7 @@ class ApplicationController < ActionController::Base
   end
 
   def breadcrumbs
-    @breadcrumbs ||= [{ name: "Home", path: root_path }]
+    @breadcrumbs ||= [ { name: "Home", path: root_path } ]
   end
 
   def add_breadcrumb(name, path = "#")

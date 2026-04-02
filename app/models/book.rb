@@ -19,11 +19,11 @@ scope :new_arrivals, -> {
 }
 
   def self.ransackable_attributes(auth_object = nil)
-    ["author", "category_id", "created_at", "description", "id",
-     "on_sale", "price", "stock_quantity", "title", "updated_at"]
+    [ "author", "category_id", "created_at", "description", "id",
+     "on_sale", "price", "stock_quantity", "title", "updated_at" ]
   end
 
   def self.ransackable_associations(auth_object = nil)
-    ["category"]
+    [ "category" ]
   end
 end

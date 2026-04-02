@@ -1,6 +1,6 @@
 class CartItemsController < ApplicationController
   before_action :set_cart
-  before_action :set_cart_item, only: [:update, :destroy]
+  before_action :set_cart_item, only: [ :update, :destroy ]
 
   def create
     book = Book.find(params[:book_id])
