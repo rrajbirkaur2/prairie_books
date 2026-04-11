@@ -13,8 +13,11 @@ namespace :import do
     imported = 0
     skipped = 0
 
-    CSV.foreach(csv_path, headers: true) do |row|
-      category = Category.find_by(name: row["category"])
+    CSV.foreach(csv_path, headers: true, liberal_parsing: true) do |row|
+      next if row["title"].blank?
+      next if row["category"].blank?
+
+      category = Category.find_by(name: row["category"]&.strip)
 
       unless category
         puts "Category not found: #{row['category']}, skipping..."
@@ -25,9 +28,9 @@ namespace :import do
       next if Book.exists?(title: row["title"])
 
       Book.create!(
-        title: row["title"],
-        author: row["author"],
-        description: row["description"],
+        title: row["title"].truncate(200),
+        author: row["author"]&.truncate(200) || "Unknown",
+        description: row["description"] || "No description available.",
         price: row["price"].to_f,
         stock_quantity: row["stock_quantity"].to_i,
         category: category

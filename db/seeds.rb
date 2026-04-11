@@ -5,6 +5,15 @@ AdminUser.find_or_create_by(email: 'admin@example.com') do |admin|
 end
 puts "Seeded admin user"
 
+# Seed Tags
+tags = ["Classic", "Bestseller", "Award Winner", "New Release",
+        "Staff Pick", "Sale", "Limited Stock", "Popular"]
+
+tags.each do |tag_name|
+  Tag.find_or_create_by(name: tag_name)
+end
+puts "Seeded #{Tag.count} tags"
+
 # Seed Pages
 Page.find_or_create_by(slug: "about").update(
   title: "About Us",
