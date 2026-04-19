@@ -21,29 +21,31 @@
       <%# Right side: stacked %>
       <div class="d-flex flex-column align-items-end gap-1">
 
-        <%# Row 1: Search box, then category filter, then Search button %>
+        <%# Row 1: Search box, category filter, Search button %>
         <%= form_with url: books_path, method: :get, local: true, class: "d-flex align-items-center gap-1" do |f| %>
           <%= f.text_field :search,
               value: params[:search],
               class: "form-control form-control-sm",
               placeholder: "Search books...",
-              style: "width: 160px;" %>
+              style: "width: 160px;",
+              id: "navbar-search-input" %>
           <%= f.select :category_id,
               options_from_collection_for_select(Category.all, :id, :name, params[:category_id]),
               { include_blank: "All Categories" },
               class: "form-select form-select-sm",
-              style: "width: 140px;" %>
+              style: "width: 140px;",
+              id: "navbar-category-select" %>
           <%= f.submit "Search", class: "btn btn-warning btn-sm" %>
         <% end %>
 
         <%# Row 2: Sign In, Sign Up, Cart %>
         <div class="d-flex align-items-center gap-2">
           <% if user_signed_in? %>
-              <span class="text-white-50 small">Hi, <%= current_user.name %></span>
+            <span class="text-white-50 small">Hi, <%= current_user.name %></span>
             <%= link_to "My Orders", orders_path, class: "btn btn-outline-light btn-sm" %>
             <%= link_to "Sign Out", destroy_user_session_path,
-              data: { turbo_method: :delete },
-              class: "btn btn-outline-light btn-sm" %>
+                data: { turbo_method: :delete },
+                class: "btn btn-outline-light btn-sm" %>
           <% else %>
             <%= link_to "Sign In", new_user_session_path, class: "btn btn-outline-light btn-sm" %>
             <%= link_to "Sign Up", new_user_registration_path, class: "btn btn-warning btn-sm" %>
