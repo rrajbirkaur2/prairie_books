@@ -12,7 +12,7 @@
       <%= link_to books_path(filter: "on_sale"), class: "text-decoration-none" do %>
         <div class="card p-4 h-100 border-warning shadow-sm">
           <span style="font-size: 2.5rem;">🏷️</span>
-          <h5 class="mt-2 text-warning fw-bold">On Sale</h5>
+          <p class="mt-2 text-warning fw-bold mb-0">On Sale</p>
           <p class="text-muted small mb-0">Great deals on selected books</p>
         </div>
       <% end %>
@@ -21,7 +21,7 @@
       <%= link_to books_path(filter: "new"), class: "text-decoration-none" do %>
         <div class="card p-4 h-100 border-success shadow-sm">
           <span style="font-size: 2.5rem;">🆕</span>
-          <h5 class="mt-2 text-success fw-bold">New Arrivals</h5>
+          <p class="mt-2 text-success fw-bold mb-0">New Arrivals</p>
           <p class="text-muted small mb-0">Books added in the last 3 days</p>
         </div>
       <% end %>
@@ -30,7 +30,7 @@
       <%= link_to books_path(filter: "recently_updated"), class: "text-decoration-none" do %>
         <div class="card p-4 h-100 border-info shadow-sm">
           <span style="font-size: 2.5rem;">🔄</span>
-          <h5 class="mt-2 text-info fw-bold">Recently Updated</h5>
+          <p class="mt-2 text-info fw-bold mb-0">Recently Updated</p>
           <p class="text-muted small mb-0">Freshly updated listings</p>
         </div>
       <% end %>
@@ -60,9 +60,9 @@
     <h2>Featured Books</h2>
     <%= link_to "View All →", books_path, class: "btn btn-outline-dark" %>
   </div>
-  <div class="row">
+  <div class="row row-cols-2 row-cols-md-4 g-3">
     <% @featured_books.each do |book| %>
-      <%= render 'shared/book_card', book: book %>
+      <%= render "shared/book_card", book: book %>
     <% end %>
   </div>
 </div>
