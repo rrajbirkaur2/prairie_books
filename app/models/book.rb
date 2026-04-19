@@ -3,9 +3,9 @@ class Book < ApplicationRecord
   has_many :book_tags, dependent: :destroy
   has_many :tags, through: :book_tags
   has_one_attached :cover_image do |attachable|
-    attachable.variant :thumb, resize_to_fill: [100, 150]
-    attachable.variant :medium, resize_to_fill: [200, 300]
-    attachable.variant :large, resize_to_fill: [400, 600]
+    attachable.variant :thumb, resize_to_fill: [ 100, 150 ]
+    attachable.variant :medium, resize_to_fill: [ 200, 300 ]
+    attachable.variant :large, resize_to_fill: [ 400, 600 ]
   end
 
   validates :title, presence: true, length: { maximum: 200 }
@@ -24,11 +24,11 @@ class Book < ApplicationRecord
   }
 
   def self.ransackable_attributes(auth_object = nil)
-    ["author", "category_id", "created_at", "description", "id",
-     "on_sale", "price", "stock_quantity", "title", "updated_at"]
+    [ "author", "category_id", "created_at", "description", "id",
+     "on_sale", "price", "stock_quantity", "title", "updated_at" ]
   end
 
   def self.ransackable_associations(auth_object = nil)
-    ["category", "tags", "book_tags"]
+    [ "category", "tags", "book_tags" ]
   end
 end
