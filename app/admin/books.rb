@@ -8,10 +8,8 @@ ActiveAdmin.register Book do
     id_column
     column :cover_image do |book|
       if book.cover_image.attached?
-        image_tag book.cover_image.variant(:thumb),
-                  style: "height: 50px; width: auto;"
-      elsif book.cover_url.present?
-        image_tag book.cover_url, style: "height: 50px; width: auto;"
+        image_tag url_for(book.cover_image),
+                  style: "height: 60px; width: 45px; object-fit: cover;"
       else
         "No image"
       end
@@ -33,7 +31,7 @@ ActiveAdmin.register Book do
   filter :category
   filter :price
   filter :on_sale, as: :select,
-         collection: [["Yes", true], ["No", false]]
+         collection: [ [ "Yes", true ], [ "No", false ] ]
   filter :tags_name, as: :string, label: "Tag Name"
 
   batch_action :mark_as_on_sale do |ids|
@@ -55,7 +53,7 @@ ActiveAdmin.register Book do
       f.input :stock_quantity
       f.input :category
       f.input :on_sale, as: :boolean, label: "On Sale?"
-      f.input :cover_url, placeholder: "https://covers.openlibrary.org/..."
+      f.input :cover_url, placeholder: "https://..."
       f.input :cover_image, as: :file
       f.input :tags, as: :check_boxes,
               collection: Tag.all,
@@ -76,13 +74,10 @@ ActiveAdmin.register Book do
       row "Tags" do |book|
         book.tags.map(&:name).join(", ")
       end
-      row :cover_url
       row :cover_image do |book|
         if book.cover_image.attached?
-          image_tag book.cover_image.variant(:large),
+          image_tag url_for(book.cover_image),
                     style: "max-height: 200px;"
-        elsif book.cover_url.present?
-          image_tag book.cover_url, style: "max-height: 200px;"
         else
           "No image"
         end
