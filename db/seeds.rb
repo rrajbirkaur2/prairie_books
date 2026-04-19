@@ -6,8 +6,8 @@ end
 puts "Seeded admin user"
 
 # Seed Tags
-tags = ["Classic", "Bestseller", "Award Winner", "New Release",
-        "Staff Pick", "Sale", "Limited Stock", "Popular"]
+tags = [ "Classic", "Bestseller", "Award Winner", "New Release",
+        "Staff Pick", "Sale", "Limited Stock", "Popular" ]
 
 tags.each do |tag_name|
   Tag.find_or_create_by(name: tag_name)
